@@ -19,7 +19,7 @@ class ExpressionTest {
         //Ascii chars: "!"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~"
         
         assertFalse(Expression.isLetter('"'));
-        assertFalse(Expression.isDigit('!'));
+        assertFalse(Expression.isLetter('!'));
         assertFalse(Expression.isLetter('5'));
         assertFalse(Expression.isLetter(';'));
         assertFalse(Expression.isLetter('@'));
@@ -78,4 +78,36 @@ class ExpressionTest {
         assertFalse(Expression.isDigit('|'));
         assertFalse(Expression.isDigit('~'));
     }
+
+    @Test void isOperator(){
+
+        //Ascii chars: !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~
+
+        assertFalse(Expression.isOperator('"'));
+        assertFalse(Expression.isOperator('!'));
+        assertFalse(Expression.isOperator('$'));
+        assertFalse(Expression.isOperator('.'));
+        assertFalse(Expression.isOperator('0'));
+        assertFalse(Expression.isOperator('5'));
+        assertFalse(Expression.isOperator('9'));
+        assertFalse(Expression.isOperator(':'));
+        assertFalse(Expression.isOperator('='));
+        assertFalse(Expression.isOperator('A'));
+        assertFalse(Expression.isOperator('X'));
+        assertFalse(Expression.isOperator('Z'));
+        assertFalse(Expression.isOperator('_'));
+        assertFalse(Expression.isOperator('`'));
+        assertFalse(Expression.isOperator('f'));
+        assertFalse(Expression.isOperator('n'));
+        assertFalse(Expression.isOperator('q'));
+        assertFalse(Expression.isOperator('|'));
+        assertFalse(Expression.isOperator('~'));
+        
+        assertTrue(Expression.isOperator('+'));
+        assertTrue(Expression.isOperator('-'));
+        assertTrue(Expression.isOperator('*'));
+        assertTrue(Expression.isOperator('/'));
+        assertTrue(Expression.isOperator('^'));
+    }
+
 }

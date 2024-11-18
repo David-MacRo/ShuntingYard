@@ -24,7 +24,7 @@ public class Expression {
             if(isLetter(to_check))
                 output.append(to_check);
             if(isOperator(to_check)){
-                while(waitin.size() != 0 && compareOperators(waitin.peek(), to_check)){
+                while(waitin.size() != 0 && compareOperators(to_check, waitin.peek())){
                     output.append(waitin.pop());
                 }
                 waitin.push(to_check);
@@ -40,7 +40,7 @@ public class Expression {
                 }
             }
         }
-        
+
         while(waitin.size() != 0){
             output.append(waitin.pop());
         }
@@ -56,7 +56,7 @@ public class Expression {
     //Ascii chars: "!"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~"
 
     protected static boolean isOperator(char to_check){
-        return to_check == '+' || to_check == '-' || to_check == '*' || to_check == '/';
+        return to_check == '+' || to_check == '-' || to_check == '*' || to_check == '/' || to_check == '^';
     }
 
     protected static boolean isDigit(char to_check){
@@ -83,6 +83,7 @@ public class Expression {
         if(op == '-') return 1;
         if(op == '*') return 2;
         if(op == '/') return 2;
+        if(op == '^') return 3;
         assert(false);
         return -1;
     }

@@ -34,7 +34,7 @@ public class Expression {
             else if(to_check == ')'){
                 while(waitin.peek() != '('){
                     output.append(waitin.pop());
-                    if(waitin.size() == 0) throw new IllegalArgumentException("Expression must have matched parenthesis");
+                    if(waitin.size() == 0) throw new IllegalStateException("Expression must have matched parenthesis");
                 }
                 waitin.pop(); // remove the left parenthesis.
             }
@@ -42,6 +42,8 @@ public class Expression {
         }
 
         while(waitin.size() != 0){
+            if(waitin.peek() == '(')
+                throw new IllegalStateException("Expression must have matched parenthesis");
             output.append(waitin.pop());
         }
 

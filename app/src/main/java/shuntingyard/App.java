@@ -7,7 +7,7 @@ public class App {
 
     public static void main(String[] args) {
         Expression output = new Expression("2*3^6");
-        System.out.println(output.convertToPostfix());
+        output.convertToPostfix();
         System.out.println(output);
     }
 }

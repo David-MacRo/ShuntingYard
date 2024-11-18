@@ -162,7 +162,7 @@ class ExpressionTest {
 
     @Test void convertToPostfix(){
         Expression to_test;
-        
+        //happy path testing:
         to_test = new Expression("A+B*(C^D-E)");
         to_test.convertToPostfix();
         assertEquals(to_test.toString(), "ABCD^E-*+");
@@ -171,12 +171,27 @@ class ExpressionTest {
         to_test.convertToPostfix();
         assertEquals(to_test.toString(), "AB+CD^E-F^*");
 
+        //exception testing:
         to_test = new Expression("(A+B)&(C^D-E)^F");
         try{
             to_test.convertToPostfix();
             assertTrue(false);
-        }catch(Exception e){
-            System.out.println(e);
+        }catch(IllegalStateException e){
         }
+
+        to_test = new Expression("(A+B)*(C^D-E^F");
+        try{
+            to_test.convertToPostfix();
+            assertTrue(false);
+        }catch(IllegalStateException e){
+        }
+
+        to_test = new Expression("A+B)*(C^D-E)^F");
+        try{
+            to_test.convertToPostfix();
+            assertTrue(false);
+        }catch(IllegalStateException e){
+        }
+
     }
 }

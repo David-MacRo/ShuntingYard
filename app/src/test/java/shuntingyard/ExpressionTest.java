@@ -7,13 +7,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ExpressionTest {
-    /*
-    @Test void appHasAGreeting() {
-        App classUnderTest = new App();
-        assertNotNull(classUnderTest.getGreeting(), "app should have a greeting");
-    }
-     */
-
+    //static function testing:
     @Test void isLetter(){
         
         //Ascii chars: "!"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~"
@@ -149,7 +143,7 @@ class ExpressionTest {
         assertFalse(Expression.compareOperators('*', '('));
         assertFalse(Expression.compareOperators('^', '('));
     }
-
+    //non-static function testing:
     @Test void constructor(){
         Expression to_test;
 

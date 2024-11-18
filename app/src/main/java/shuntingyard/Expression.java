@@ -72,6 +72,7 @@ public class Expression {
     protected static boolean isLowerCase(char to_check){
         return  to_check >= 'a' && to_check <= 'z';
     }
+    
     protected static boolean isUpperCase(char to_check){
         return to_check >= 'A' && to_check <= 'Z';
     }

@@ -4,11 +4,10 @@
 package shuntingyard;
 
 public class App {
-    public String getGreeting() {
-        return "Hello World!";
-    }
 
     public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+        Expression output = new Expression("2+3");
+        System.out.println(output.convertToPostfix());
+        System.out.println(output);
     }
 }

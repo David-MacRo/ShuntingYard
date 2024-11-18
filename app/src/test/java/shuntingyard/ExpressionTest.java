@@ -102,7 +102,8 @@ class ExpressionTest {
         assertFalse(Expression.isOperator('q'));
         assertFalse(Expression.isOperator('|'));
         assertFalse(Expression.isOperator('~'));
-        
+
+
         assertTrue(Expression.isOperator('+'));
         assertTrue(Expression.isOperator('-'));
         assertTrue(Expression.isOperator('*'));
@@ -110,4 +111,72 @@ class ExpressionTest {
         assertTrue(Expression.isOperator('^'));
     }
 
+    @Test void operatorPrecedence(){
+        //prove EMDAS
+        assertTrue(Expression.operatorPrecedence('+') == Expression.operatorPrecedence('-'));
+        assertTrue(Expression.operatorPrecedence('*') == Expression.operatorPrecedence('/'));
+        assertTrue(Expression.operatorPrecedence('^') > Expression.operatorPrecedence('*'));
+        assertTrue(Expression.operatorPrecedence('*') > Expression.operatorPrecedence('+'));
+        //parenthesis are NOT handled by operator preference. This forces it to leave them alone:
+        assertTrue(Expression.operatorPrecedence('(') < Expression.operatorPrecedence('+'));
+        try{
+            Expression.operatorPrecedence('1');
+            assertTrue(false);
+        }catch(IllegalArgumentException e){
+
+        }
+    }
+
+    @Test void compareOperators(){
+        //comparison between these three based on PEMDAS
+        assertTrue(Expression.compareOperators('+', '+'));
+        assertTrue(Expression.compareOperators('+', '*'));
+        assertTrue(Expression.compareOperators('+', '^'));
+
+
+        assertFalse(Expression.compareOperators('*', '+'));
+        assertTrue(Expression.compareOperators('*', '*'));
+        assertTrue(Expression.compareOperators('*', '^'));
+
+
+        assertFalse(Expression.compareOperators('^', '+'));
+        assertFalse(Expression.compareOperators('^', '*'));
+        assertTrue(Expression.compareOperators('^', '^'));
+
+
+        //comparison to parenthesis should always be false.
+        assertFalse(Expression.compareOperators('+', '('));
+        assertFalse(Expression.compareOperators('*', '('));
+        assertFalse(Expression.compareOperators('^', '('));
+    }
+
+    @Test void constructor(){
+        Expression to_test;
+
+        to_test = new Expression();
+        assertEquals(to_test.toString(), "");
+        
+        to_test = new Expression("A+B*(C^D-E)");
+        assertEquals(to_test.toString(), "A+B*(C^D-E)");
+    }
+
+    @Test void convertToPostfix(){
+        Expression to_test;
+        
+        to_test = new Expression("A+B*(C^D-E)");
+        to_test.convertToPostfix();
+        assertEquals(to_test.toString(), "ABCD^E-*+");
+        
+        to_test = new Expression("(A+B)*(C^D-E)^F");
+        to_test.convertToPostfix();
+        assertEquals(to_test.toString(), "AB+CD^E-F^*");
+
+        to_test = new Expression("(A+B)&(C^D-E)^F");
+        try{
+            to_test.convertToPostfix();
+            assertTrue(false);
+        }catch(Exception e){
+            System.out.println(e);
+        }
+    }
 }

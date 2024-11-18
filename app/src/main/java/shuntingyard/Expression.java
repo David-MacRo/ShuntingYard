@@ -21,24 +21,24 @@ public class Expression {
             to_check = this.contents.charAt(i);
             if(isDigit(to_check))
                 output.append(to_check);
-            if(isLetter(to_check))
+            else if(isLetter(to_check))
                 output.append(to_check);
-            if(isOperator(to_check)){
+            else if(isOperator(to_check)){
                 while(waitin.size() != 0 && compareOperators(to_check, waitin.peek())){
                     output.append(waitin.pop());
                 }
                 waitin.push(to_check);
             }
-            if(to_check == '(')
+            else if(to_check == '(')
                 waitin.push(to_check);
-            if(to_check == ')'){
+            else if(to_check == ')'){
                 while(waitin.peek() != '('){
                     output.append(waitin.pop());
-                    if(waitin.size() == 0){
-                        throw new IllegalArgumentException("Expression must have matched parenthesis");
-                    }
+                    if(waitin.size() == 0) throw new IllegalArgumentException("Expression must have matched parenthesis");
                 }
+                waitin.pop(); // remove the left parenthesis.
             }
+            else throw new IllegalStateException("Cannot convert an expression with illegal characters to postfix");
         }
 
         while(waitin.size() != 0){
@@ -79,12 +79,12 @@ public class Expression {
     }
 
     protected static int operatorPrecedence(char op){
+        if(op == '(') return 0; //parenthesis are NOT handled by operator preference. This forces it to leave them alone.
         if(op == '+') return 1;
         if(op == '-') return 1;
         if(op == '*') return 2;
         if(op == '/') return 2;
         if(op == '^') return 3;
-        assert(false);
-        return -1;
+        throw new IllegalArgumentException();
     }
 }

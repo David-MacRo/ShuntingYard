@@ -117,7 +117,9 @@ class ExpressionTest {
             Expression.operatorPrecedence('1');
             assertTrue(false);
         }catch(IllegalArgumentException e){
-
+        }catch(Exception e){
+            e.printStackTrace();
+            assertTrue(false, "Operator precedence should not throw this error.");
         }
     }
 
@@ -169,7 +171,7 @@ class ExpressionTest {
         to_test = new Expression("(A+B)&(C^D-E)^F");
         try{
             to_test.convertToPostfix();
-            assertTrue(false);
+            assertTrue(false, "Illegal character should throw exception");
         }catch(IllegalStateException e){
         }
 
@@ -187,5 +189,9 @@ class ExpressionTest {
         }catch(IllegalStateException e){
         }
 
+    }
+    @Test void temp(){
+        Expression to_test = new Expression("(A+B)*C");
+        to_test.convertToPostfix();
     }
 }

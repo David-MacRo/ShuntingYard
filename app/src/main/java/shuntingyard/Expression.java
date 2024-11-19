@@ -20,6 +20,7 @@ public class Expression {
         for(int i = 0; i <this.contents.length(); i++){
             to_check = this.contents.charAt(i);
             if(isDigit(to_check))
+                //TODO implement multi digit numbers
                 output.append(to_check);
             else if(isLetter(to_check))
                 output.append(to_check);
@@ -28,8 +29,7 @@ public class Expression {
                     output.append(waitin.pop());
                 }
                 waitin.push(to_check);
-            }
-            else if(to_check == '(')
+            }else if(to_check == '(')
                 waitin.push(to_check);
             else if(to_check == ')'){
                 while(waitin.peek() != '('){
@@ -37,8 +37,7 @@ public class Expression {
                     if(waitin.size() == 0) throw new IllegalStateException("Expression must have matched parenthesis");
                 }
                 waitin.pop(); // remove the left parenthesis.
-            }
-            else throw new IllegalStateException("Cannot convert an expression with illegal characters to postfix");
+            }else throw new IllegalStateException("Cannot convert an expression with illegal characters to postfix");
         }
 
         while(waitin.size() != 0){
@@ -82,12 +81,14 @@ public class Expression {
     }
 
     protected static int operatorPrecedence(char op){
-        if(op == '(') return 0; //parenthesis are NOT handled by operator preference. This forces it to leave them alone.
-        if(op == '+') return 1;
-        if(op == '-') return 1;
-        if(op == '*') return 2;
-        if(op == '/') return 2;
-        if(op == '^') return 3;
-        throw new IllegalArgumentException();
+        switch(op){
+            case '(': return 0;//parenthesis are NOT handled by operator preference. This forces it to leave them alone.
+            case '+':
+            case '-': return 1;
+            case '*':
+            case '/': return 2;
+            case '^': return 3;
+            default:  throw new IllegalArgumentException("Operator Precedence can only be calculated for operators");
+        }
     }
 }

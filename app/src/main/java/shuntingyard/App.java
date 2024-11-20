@@ -22,8 +22,7 @@ public class App {
         System.out.println("Type an expression to be converted to postfix");
         input = scannie.next();
         
-        while(!input.equals("Q")){
-            System.out.println("|" + input + "|");
+        while(!(input.equals("Q") || input.equals("q"))){
             output = new Expression(input);
             try {
                 System.out.println(output.convertToPostfix());
@@ -31,7 +30,7 @@ public class App {
                 System.out.println("Please match parenthesis and don't use any uninterpretable symbols");
             }
             System.out.println("\nType another expression, or \"Q\" to exit.");
-            input = scannie.next();
+            input = scannie.nextLine();
         }
         
         scannie.close();
